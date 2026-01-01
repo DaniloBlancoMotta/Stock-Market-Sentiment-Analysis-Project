@@ -99,8 +99,7 @@ Manifests are localized in the `k8s/` directory.
 - **Probes**: The deployment uses a `/health` endpoint for Liveness and Readiness checks.
 
 
-## 🔍 New Features
-- **Feature Importance Analysis**: New section in `notebooks/eda.ipynb` visualizes terms driving sentiment.
+
 - **CORS Enabled**: Interactive documentation at `/docs` now allows direct testing (FastAPI Middleware).
 
 ---
