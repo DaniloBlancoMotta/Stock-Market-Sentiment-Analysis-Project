@@ -102,4 +102,7 @@ Manifests are localized in the `k8s/` directory.
 
 - **CORS Enabled**: Interactive documentation at `/docs` now allows direct testing (FastAPI Middleware).
 
+## 📄 License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
 ---
