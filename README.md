@@ -33,25 +33,29 @@ graph TD
 
 ## 📊 Model Evaluation & Selection
 
-For this project, several classification models were compared to ensure high performance on unbalanced financial text data. The evaluation metric used was the **Macro F1-Score**, which balances precision and recall for both positive and negative classes.
+For this project, classification models were evaluated using the **Macro F1-Score** to ensure balanced performance across positive and negative sentiment classes.
 
-### 📈 Comparison Results
-| Model | Macro F1-Score | Strength |
-| :--- | :---: | :--- |
-| **LinearSVC** | **~0.82** | Best performance, fast inference. |
-| Logistic Regression | ~0.79 | High interpretability, solid baseline. |
-| MLPClassifier | ~0.81 | Strong non-linear detection, slower. |
+### 📈 Final Model Performance (`train.py`)
+The final model selected was **LinearSVC**, optimized via `GridSearchCV`. Below is the performance report on the test set:
 
-### 🎯 Chosen Model: **LinearSVC**
-The **LinearSVC** (Support Vector Classifier) with `class_weight='balanced'` was selected as the final production model.
-- **Why**: achieved the highest F1-Score (consistent ~0.82 in testing).
-- **Efficiency**: Extremely fast prediction times, suitable for high-throughput API endpoints.
-- **Robustness**: Handled the sparse, high-dimensional TF-IDF feature space better than Logistic Regression.
+| Class | Precision | Recall | F1-Score | Support |
+| :--- | :---: | :---: | :---: | :---: |
+| **Negative (0)** | 0.70 | 0.74 | 0.72 | 421 |
+| **Positive (1)** | 0.84 | 0.82 | 0.83 | 738 |
+| | | | | |
+| **Accuracy** | | | **0.79** | 1159 |
+| **Macro Avg** | **0.77** | **0.78** | **0.77** | 1159 |
+
+### 🎯 Chosen Model Justification: **LinearSVC**
+Although Logistic Regression and LinearSVC showed similar performance in initial exploratory tests (~0.77 Macro F1), **LinearSVC** was chosen for production due to:
+- **Efficiency**: Faster inference times, optimal for a production FastAPI service.
+- **Robustness**: Better convergence behavior in high-dimensional TF-IDF feature spaces (unigrams+bigrams).
+- **Scalability**: Handled the sparse vectors more effectively during hyperparameter tuning.
 
 ### ⚙️ Parameter Tuning
 Hyperparameters were tuned using `GridSearchCV`:
 - **TF-IDF**: Optimized `max_features` (5,000-10,000) and `ngram_range` (unigrams vs. bigrams).
-- **Classifier**: Adjusted regularization parameter `C` to prevent overfitting.
+- **Classifier**: Adjusted regularization parameter `C` to prevent overfitting and `class_weight='balanced'` to handle the sentiment distribution.
 
 ##  Project Structure
 - `data/`: Contains the raw dataset (downloaded automatically if missing).
