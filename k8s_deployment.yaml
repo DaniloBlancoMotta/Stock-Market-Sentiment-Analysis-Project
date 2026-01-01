@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stock-sentiment-deployment
+  labels:
+    app: stock-sentiment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: stock-sentiment
+  template:
+    metadata:
+      labels:
+        app: stock-sentiment
+    spec:
+      containers:
+      - name: stock-sentiment
+        image: stock-sentiment:v2.0.0
+        ports:
+        - containerPort: 9696
+        resources:
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
+          requests:
+            cpu: "250m"
+            memory: "256Mi"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 9696
+          initialDelaySeconds: 15
+          periodSeconds: 20
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 9696
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        env:
+        - name: PORT
+          value: "9696"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: stock-sentiment-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: stock-sentiment
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 9696
