@@ -31,6 +31,28 @@ graph TD
     end
 ```
 
+## 📊 Model Evaluation & Selection
+
+For this project, several classification models were compared to ensure high performance on unbalanced financial text data. The evaluation metric used was the **Macro F1-Score**, which balances precision and recall for both positive and negative classes.
+
+### 📈 Comparison Results
+| Model | Macro F1-Score | Strength |
+| :--- | :---: | :--- |
+| **LinearSVC** | **~0.82** | Best performance, fast inference. |
+| Logistic Regression | ~0.79 | High interpretability, solid baseline. |
+| MLPClassifier | ~0.81 | Strong non-linear detection, slower. |
+
+### 🎯 Chosen Model: **LinearSVC**
+The **LinearSVC** (Support Vector Classifier) with `class_weight='balanced'` was selected as the final production model.
+- **Why**: achieved the highest F1-Score (consistent ~0.82 in testing).
+- **Efficiency**: Extremely fast prediction times, suitable for high-throughput API endpoints.
+- **Robustness**: Handled the sparse, high-dimensional TF-IDF feature space better than Logistic Regression.
+
+### ⚙️ Parameter Tuning
+Hyperparameters were tuned using `GridSearchCV`:
+- **TF-IDF**: Optimized `max_features` (5,000-10,000) and `ngram_range` (unigrams vs. bigrams).
+- **Classifier**: Adjusted regularization parameter `C` to prevent overfitting.
+
 ##  Project Structure
 - `data/`: Contains the raw dataset (downloaded automatically if missing).
 - `notebooks/`: Contains `eda.ipynb` (EDA & Feature Importance Analysis).
