@@ -5,6 +5,8 @@ The goal of this project is to build an automated sentiment analysis pipeline fo
 
 The technical objective is to perform Exploratory Data Analysis (EDA), train a high-performance classification model with balanced weights, and deploy it as a modern **FastAPI** service. The project also includes **Feature Importance Analysis** for model interpretability.
 
+![Feature Importance](images/feature_importance.png)
+
 ##  System Architecture
 ```mermaid
 graph TD
